@@ -1,0 +1,203 @@
+$color1: #8084f1;
+$color2: #cdcbff;
+$color3: #6368d8;
+$color4: #b9b9b9;
+$color5: #707070;
+$color6: #f9f9f9;
+$color7: #d62c7b;
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 400;
+  text-align: center;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.btn {
+  color: $color6;
+  padding: 0.8rem;
+  font-size: 14px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  font-weight: 400;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  background-color: $color3;
+}
+
+.btn:hover {
+  background-color: $color1;
+}
+
+.cards {
+  display: grid;
+  gap: 1rem;
+  grid-auto-rows: 10rem;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  //list-style: none;
+  margin: 5px;
+}
+
+
+
+.card_title {
+  color: $color6;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  margin: 0px;
+  padding: 5px;
+  background-color: $color3;
+  opacity: .7;
+  height: 18px;
+}
+
+.card_text {
+  color:  $color6;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  font-weight: 400;
+  padding: 5px;
+  background-color: $color5;
+  opacity: 0.7;
+}
+
+.img-producto {
+  width: 450px;
+  border: 1px solid $color4;
+  border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  padding: 8px;
+  margin-right: 10px;
+  overflow: hidden;
+  height: 350px;
+}
+
+
+.image-portada{
+  width: 450px;
+  height: 253px;
+  text-align: center;
+}
+
+.conten-producto{
+  display: grid;
+  grid-template-columns: 600px auto auto;
+  gap: 8px;
+  margin: auto;
+  justify-content: center;
+  margin-top: 50px;
+}
+.conten-producto-caja{
+  display: grid;
+  grid-template-columns: 50% auto;
+  gap: 1rem;
+  margin: auto;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+// .productos-ventas{
+//   width: 60%;
+//   height: autos;
+// }
+
+.factura-venta{
+  max-height: 200px;
+  display: grid;
+  border: 1px solid $color4;
+  border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  padding: 5px;
+}
+.img-venta{
+  width: 60px;
+}
+
+.producto-venta{
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid $color4;
+  border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  margin: 5px;
+}
+.producto-venta-caja{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid $color4;
+  border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  margin: 5px;
+}
+.label-total{
+  color: $color5;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.botons-ventas{
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 5px;
+}
+.botons-ventas-factura{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 5px;
+}
+
+.miniaturas{
+  margin-top: 5px;
+  text-align: center;
+  padding: 4px;
+}
+
+.miniaturas img {
+  margin-left: 2px;
+  cursor: pointer;
+}
+
+.miniaturas img:hover{
+  border: 1px solid $color1;
+}
+
+.img-portada{
+  width: auto;
+  height: auto;
+  max-width: 400px;
+  max-height: 253px;
+}
+
+.producto-info{
+  display: grid;
+  grid-template-rows: 90px auto;
+  cursor: pointer;
+}
+
+.codigo-barra{
+  width: 100%;
+  height: 60px;
+  text-align: center;
+}
