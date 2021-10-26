@@ -99,6 +99,7 @@ const InfoCredito = () => {
         return abonos
     }, [])
     const consultarPagos = useCallback(() => {
+        dispacher(setSpiner(true))
         httpGet<IPago[]>(`${urlBase}pagos/${credito.id}`, { headers: { Authorization: sesion.sesion.token } })
             .then(result => {
                 if (result.data.length > 0) {
@@ -118,6 +119,7 @@ const InfoCredito = () => {
     }, [dispacher, sesion.sesion.token, credito.id, abonado, urlBase])
 
     const consutarCredito = useCallback(() => {
+        dispacher(setSpiner(true))
         httpGet<ICredito>(`${urlBase}creditos/credito/${credito.id}`, { headers: { Authorization: sesion.sesion.token } })
             .then(result => {
                 if (result.data.id) {

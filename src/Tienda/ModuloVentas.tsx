@@ -9,7 +9,7 @@ import { store } from 'react-notifications-component';
 import { danger, success, warning } from '../Utils/Notificaciones';
 import NewVentas from '../Component/NewVentas'
 import CloseIcon from '@material-ui/icons/Close';
-import { MenuItem, TextField, Grid, List, ListItem, ListItemAvatar, Avatar, ListItemText, Typography, Dialog, AppBar, Toolbar, IconButton, Slide, TableContainer, Paper, TableHead, TableRow, TableCell, TableBody, ListItemSecondaryAction, Box } from '@material-ui/core';
+import { MenuItem, TextField, Grid, List, ListItem, ListItemAvatar, Avatar, ListItemText, Typography, Dialog, AppBar, Toolbar, IconButton, Slide, TableContainer, Paper, TableHead, TableRow, TableCell, TableBody, ListItemSecondaryAction, Box, LinearProgress } from '@material-ui/core';
 import { TransitionProps } from '@material-ui/core/transitions/transition';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Table } from 'react-bootstrap';
@@ -336,263 +336,266 @@ const ModuloVentas = () => {
 
     const componentRef = useRef<HTMLDivElement>(null);
     return (
-        <NewVentas funcionBusqueda={handlerProducto} value={codigo} busqueda>
-            <Grid container justifyContent="center" spacing={2}>
-                <Grid item xs={9}>
-                    <List>
-                        {
-                            productos.reverse().map((producto, index) => (
-                                <>
-                                    <ListItem key={producto.id} style={{ cursor: 'pointer', backgroundColor: "#fff" }}>
-                                        <ListItemAvatar>
-                                            <Avatar src={producto.image} />
-                                        </ListItemAvatar>
-                                        <ListItemText
-                                            primary={producto.nombre}
-                                            secondary={
-                                                <React.Fragment>
-                                                    <Typography
-                                                        component="span"
-                                                        variant="body2"
-                                                        color="textPrimary"
-                                                    >
-                                                        $ {Intl.NumberFormat().format(producto.precio) + " "}
-                                                    </Typography>
-                                                    {producto.descripcion}
-                                                </React.Fragment>
-                                            }
-                                        />
-                                        <ListItemSecondaryAction>
-                                            <IconButton onClick={() => { eliminarProductoLista(producto.id) }} edge="end" aria-label="delete">
-                                                <DeleteIcon style={{ color: "#d62c7b" }} />
-                                            </IconButton>
-                                        </ListItemSecondaryAction>
-                                    </ListItem>
-                                </>
-                            ))
-                        }
-                    </List>
-                </Grid>
-                <Grid item xs={3}>
-                    <Grid container spacing={2} >
-                        <Grid item xs={12}>
-                            <label className="fnt-18 label-color1 label-100">Esta Venta</label>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <label className="label-total">Total: ${Intl.NumberFormat().format(total)}</label>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Grid container spacing={1}>
-                                <Grid item xs={12}>
-                                    <Boton color="bgc3" label="Contado" functionBoton={openModal} styleBoton="" />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Boton color="bgc7" label="Credito" functionBoton={isCreditoModel} styleBoton="" />
+        <>
+            <NewVentas funcionBusqueda={handlerProducto} value={codigo} busqueda>
+                {/* <LinearProgress color="secondary" /> */}
+                <Grid container justifyContent="center" spacing={2}>
+                    <Grid item xs={9}>
+                        <List>
+                            {
+                                productos.reverse().map((producto, index) => (
+                                    <>
+                                        <ListItem key={producto.id} style={{ cursor: 'pointer', backgroundColor: "#fff" }}>
+                                            <ListItemAvatar>
+                                                <Avatar src={producto.image} />
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary={producto.nombre}
+                                                secondary={
+                                                    <React.Fragment>
+                                                        <Typography
+                                                            component="span"
+                                                            variant="body2"
+                                                            color="textPrimary"
+                                                        >
+                                                            $ {Intl.NumberFormat().format(producto.precio) + " "}
+                                                        </Typography>
+                                                        {producto.descripcion}
+                                                    </React.Fragment>
+                                                }
+                                            />
+                                            <ListItemSecondaryAction>
+                                                <IconButton onClick={() => { eliminarProductoLista(producto.id) }} edge="end" aria-label="delete">
+                                                    <DeleteIcon style={{ color: "#d62c7b" }} />
+                                                </IconButton>
+                                            </ListItemSecondaryAction>
+                                        </ListItem>
+                                    </>
+                                ))
+                            }
+                        </List>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Grid container spacing={2} >
+                            <Grid item xs={12}>
+                                <label className="fnt-18 label-color1 label-100">Esta Venta</label>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <label className="label-total">Total: ${Intl.NumberFormat().format(total)}</label>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Grid container spacing={1}>
+                                    <Grid item xs={12}>
+                                        <Boton color="bgc3" label="Contado" functionBoton={openModal} styleBoton="" />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Boton color="bgc7" label="Credito" functionBoton={isCreditoModel} styleBoton="" />
+                                    </Grid>
                                 </Grid>
                             </Grid>
+
                         </Grid>
 
                     </Grid>
 
                 </Grid>
+                <Dialog fullScreen open={modalIsOpen} onClose={closeModal} TransitionComponent={Transition}>
+                    <AppBar className={classes.appBar}>
+                        <Toolbar>
+                            <IconButton edge="start" color="inherit" onClick={() => { setIsOpen(false) }} aria-label="close">
+                                <CloseIcon />
+                            </IconButton>
+                            <Typography variant="h6" className={classes.title}>
+                                Venta Actual
+                            </Typography>
+                        </Toolbar>
+                    </AppBar>
+                    {verFactura ? (
+                        <div>
 
-            </Grid>
-            <Dialog fullScreen open={modalIsOpen} onClose={closeModal} TransitionComponent={Transition}>
-                <AppBar className={classes.appBar}>
-                    <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={() => { setIsOpen(false) }} aria-label="close">
-                            <CloseIcon />
-                        </IconButton>
-                        <Typography variant="h6" className={classes.title}>
-                            Venta Actual
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                {verFactura ? (
-                    <div>
+                            <div style={{ width: 400, margin: "auto" }} ref={componentRef}>
+                                <Box m={3} >
+                                    <Grid container justifyContent="space-between" >
+                                        <Grid item xs={12}>{tienda.nombre}</Grid>
+                                        <Grid item xs={7}>
+                                            <Grid item xs={12}>Fehca: .........................................</Grid>
+                                            <Grid item xs={12}>Cliente: .........................................</Grid>
+                                            <Grid item xs={12}>Cedula: .........................................</Grid>
 
-                        <div style={{ width: 400, margin: "auto" }} ref={componentRef}>
-                            <Box m={3} >
-                                <Grid container justifyContent="space-between" >
-                                    <Grid item xs={12}>{tienda.nombre}</Grid>
-                                    <Grid item xs={7}>
-                                        <Grid item xs={12}>Fehca: .........................................</Grid>
-                                        <Grid item xs={12}>Cliente: .........................................</Grid>
-                                        <Grid item xs={12}>Cedula: .........................................</Grid>
-
-                                    </Grid>
-                                    <Grid item xs={5}>
-                                        <Grid xs={12} item>
-                                            {moment().format("YYYY-MM-DD")}
                                         </Grid>
-                                        <Grid item xs={12}>{cliente.nombre}</Grid>
-                                        <Grid item xs={12}>{cliente.cedula}</Grid>
+                                        <Grid item xs={5}>
+                                            <Grid xs={12} item>
+                                                {moment().format("YYYY-MM-DD")}
+                                            </Grid>
+                                            <Grid item xs={12}>{cliente.nombre}</Grid>
+                                            <Grid item xs={12}>{cliente.cedula}</Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item xs={12}>Tiket de compra</Grid>
+                                </Box>
+                                <TableContainer component={Paper} >
+                                    <Table style={{ width: '100%' }}>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell align="center" colSpan={3}>
+                                                    Productos de esta venta
+                                                </TableCell>
+                                                <TableCell align="right">Priecio</TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell>Desc</TableCell>
+                                                <TableCell align="right">Cantidad</TableCell>
+                                                <TableCell align="right">Precio unidad</TableCell>
+                                                <TableCell align="right">S. total</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {detalle.map((row, index) => (
+                                                <TableRow key={index}>
+                                                    <TableCell>{row.producto.nombre}</TableCell>
+                                                    <TableCell align="right">{row.cantidad}</TableCell>
+                                                    <TableCell align="right">${Intl.NumberFormat().format(row.producto.precio)}</TableCell>
+                                                    <TableCell align="right">${Intl.NumberFormat().format(row.precio * row.cantidad)}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                            <TableRow>
+                                                <TableCell rowSpan={3} />
+                                                <TableCell colSpan={2}>Total a pagar</TableCell>
+                                                <TableCell align="right">${Intl.NumberFormat().format(total)}</TableCell>
+                                            </TableRow>
+                                        </TableBody>
+
+                                    </Table>
+
+                                </TableContainer>
+                            </div>
+                            <Box mt={3}>
+                                <Grid container justifyContent="center">
+                                    <Grid xs={2}>
+                                        <ReactToPrint
+                                            trigger={() => <button className="btn">imprimir</button>}
+                                            content={() => componentRef.current}
+                                        />
+
                                     </Grid>
                                 </Grid>
-                                <Grid item xs={12}>Tiket de compra</Grid>
+
                             </Box>
-                            <TableContainer component={Paper} >
-                                <Table style={{ width: '100%' }}>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell align="center" colSpan={3}>
-                                                Productos de esta venta
-                                            </TableCell>
-                                            <TableCell align="right">Priecio</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell>Desc</TableCell>
-                                            <TableCell align="right">Cantidad</TableCell>
-                                            <TableCell align="right">Precio unidad</TableCell>
-                                            <TableCell align="right">S. total</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {detalle.map((row, index) => (
-                                            <TableRow key={index}>
-                                                <TableCell>{row.producto.nombre}</TableCell>
-                                                <TableCell align="right">{row.cantidad}</TableCell>
-                                                <TableCell align="right">${Intl.NumberFormat().format(row.producto.precio)}</TableCell>
-                                                <TableCell align="right">${Intl.NumberFormat().format(row.precio * row.cantidad)}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                        <TableRow>
-                                            <TableCell rowSpan={3} />
-                                            <TableCell colSpan={2}>Total a pagar</TableCell>
-                                            <TableCell align="right">${Intl.NumberFormat().format(total)}</TableCell>
-                                        </TableRow>
-                                    </TableBody>
-
-                                </Table>
-
-                            </TableContainer>
                         </div>
-                        <Box mt={3}>
-                            <Grid container justifyContent="center">
-                                <Grid xs={2}>
-                                    <ReactToPrint
-                                        trigger={() => <button className="btn">imprimir</button>}
-                                        content={() => componentRef.current}
-                                    />
-
-                                </Grid>
-                            </Grid>
-
-                        </Box>
-                    </div>
-                ) : (
-                    <Grid container justifyContent="space-between">
-                        <Grid item xs={12}>
-                            <Grid container justifyContent="space-between">
-                                <Grid item xs={isCredito ? 6 : 8}>
-                                    <div className="box-register">
-                                        <TableContainer component={Paper} >
-                                            <Table style={{ width: '100%' }}>
-                                                <TableHead>
-                                                    <TableRow>
-                                                        <TableCell align="center" colSpan={3}>
-                                                            Productos de esta venta
-                                                        </TableCell>
-                                                        <TableCell align="right">Priecio</TableCell>
-                                                    </TableRow>
-                                                    <TableRow>
-                                                        <TableCell>Desc</TableCell>
-                                                        <TableCell align="right">Cantidad</TableCell>
-                                                        <TableCell align="right">Precio unidad</TableCell>
-                                                        <TableCell align="right">S. total</TableCell>
-                                                        <TableCell align="right">S. total</TableCell>
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {detalle.map((row, index) => (
-                                                        <TableRow key={index}>
-                                                            <TableCell>{row.producto.nombre}</TableCell>
-                                                            <TableCell align="right">{row.cantidad}</TableCell>
-                                                            <TableCell align="right">${Intl.NumberFormat().format(row.producto.precio)}</TableCell>
-                                                            <TableCell align="right">${Intl.NumberFormat().format(row.precio * row.cantidad)}</TableCell>
-                                                        </TableRow>
-                                                    ))}
-                                                    <TableRow>
-                                                        <TableCell rowSpan={3} />
-                                                        <TableCell colSpan={2}>Total a pagar</TableCell>
-                                                        <TableCell align="right">${Intl.NumberFormat().format(total)}</TableCell>
-                                                    </TableRow>
-                                                </TableBody>
-
-                                            </Table>
-
-                                        </TableContainer>
-                                    </div>
-                                </Grid>
-                                <Grid item xs={isCredito ? 3 : 4}>
-                                    <div className="box-register">
-                                        <label className="label-100 label-color1 fnt-18 label-center ">Cliente</label>
-                                        <TextField label="Cedula" id="filled-size-normal" size="small" name="cedula" variant="outlined" onChange={cargarCliente} />
-                                        <TextField id="filled-size-normal" size="small" name="nombre" variant="outlined" onChange={handlerData} disabled={isCliente} value={cliente.nombre} />
-                                        <TextField id="filled-size-normal" size="small" name="email" variant="outlined" onChange={handlerData} disabled={isCliente} value={cliente.email} />
-                                        <TextField id="filled-size-normal" size="small" name="direccion" variant="outlined" onChange={handlerData} disabled={isCliente} value={cliente.direccion} />
-                                        <TextField id="filled-size-normal" size="small" name="telefono" variant="outlined" onChange={handlerData} disabled={isCliente} value={cliente.telefono} />
-                                    </div>
-                                </Grid>
-                                {isCredito ?
-                                    <Grid item xs={3}>
+                    ) : (
+                        <Grid container justifyContent="space-between">
+                            <Grid item xs={12}>
+                                <Grid container justifyContent="space-between">
+                                    <Grid item xs={isCredito ? 6 : 8}>
                                         <div className="box-register">
-                                            <label className="label-100 label-color1 fnt-18 label-center ">Credito</label>
-                                            <TextField label="Numero de cuotas" id="filled-size-normal" size="small" name="numcuotas" variant="outlined" disabled={!isCliente} onChange={handlerDataCredito} />
-                                            <TextField label="Intereses %" id="filled-size-normal" size="small" name="interes" variant="outlined" disabled={!isCliente} onChange={handlerDataCredito} />
-                                            <TextField label="Valor cuota inicial" id="filled-size-normal" size="small" name="cuota" variant="outlined" disabled={!isCliente} onChange={handlerDataCredito} />
-                                            <TextField
-                                                id="outlined-select-currency"
-                                                select
-                                                label="Periodo cuotas"
-                                                onChange={handlerDataCredito}
-                                                variant="outlined"
-                                                name="periodo"
-                                                disabled={!isCliente}
-                                                size="small"
-                                            >
-                                                <MenuItem value={1}>
-                                                    Semanal
-                                                </MenuItem>
-                                                <MenuItem value={2}>
-                                                    Quincenal
-                                                </MenuItem>
-                                                <MenuItem value={3}>
-                                                    Mensual
-                                                </MenuItem>
-                                                <MenuItem value={4}>
-                                                    Trimestral
-                                                </MenuItem>
+                                            <TableContainer component={Paper} >
+                                                <Table style={{ width: '100%' }}>
+                                                    <TableHead>
+                                                        <TableRow>
+                                                            <TableCell align="center" colSpan={3}>
+                                                                Productos de esta venta
+                                                            </TableCell>
+                                                            <TableCell align="right">Priecio</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>Desc</TableCell>
+                                                            <TableCell align="right">Cantidad</TableCell>
+                                                            <TableCell align="right">Precio unidad</TableCell>
+                                                            <TableCell align="right">S. total</TableCell>
+                                                            <TableCell align="right">S. total</TableCell>
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody>
+                                                        {detalle.map((row, index) => (
+                                                            <TableRow key={index}>
+                                                                <TableCell>{row.producto.nombre}</TableCell>
+                                                                <TableCell align="right">{row.cantidad}</TableCell>
+                                                                <TableCell align="right">${Intl.NumberFormat().format(row.producto.precio)}</TableCell>
+                                                                <TableCell align="right">${Intl.NumberFormat().format(row.precio * row.cantidad)}</TableCell>
+                                                            </TableRow>
+                                                        ))}
+                                                        <TableRow>
+                                                            <TableCell rowSpan={3} />
+                                                            <TableCell colSpan={2}>Total a pagar</TableCell>
+                                                            <TableCell align="right">${Intl.NumberFormat().format(total)}</TableCell>
+                                                        </TableRow>
+                                                    </TableBody>
 
-                                            </TextField>
-                                            <TextField label="Valor cuotas" id="filled-size-normal" size="small" name="valorcuotas" disabled value={Math.round(valorcuota)} variant="outlined" onChange={handlerDataCredito} />
+                                                </Table>
+
+                                            </TableContainer>
                                         </div>
                                     </Grid>
+                                    <Grid item xs={isCredito ? 3 : 4}>
+                                        <div className="box-register">
+                                            <label className="label-100 label-color1 fnt-18 label-center ">Cliente</label>
+                                            <TextField label="Cedula" id="filled-size-normal" size="small" name="cedula" variant="outlined" onChange={cargarCliente} />
+                                            <TextField id="filled-size-normal" size="small" name="nombre" variant="outlined" onChange={handlerData} disabled={isCliente} value={cliente.nombre} />
+                                            <TextField id="filled-size-normal" size="small" name="email" variant="outlined" onChange={handlerData} disabled={isCliente} value={cliente.email} />
+                                            <TextField id="filled-size-normal" size="small" name="direccion" variant="outlined" onChange={handlerData} disabled={isCliente} value={cliente.direccion} />
+                                            <TextField id="filled-size-normal" size="small" name="telefono" variant="outlined" onChange={handlerData} disabled={isCliente} value={cliente.telefono} />
+                                        </div>
+                                    </Grid>
+                                    {isCredito ?
+                                        <Grid item xs={3}>
+                                            <div className="box-register">
+                                                <label className="label-100 label-color1 fnt-18 label-center ">Credito</label>
+                                                <TextField label="Numero de cuotas" id="filled-size-normal" size="small" name="numcuotas" variant="outlined" disabled={!isCliente} onChange={handlerDataCredito} />
+                                                <TextField label="Intereses %" id="filled-size-normal" size="small" name="interes" variant="outlined" disabled={!isCliente} onChange={handlerDataCredito} />
+                                                <TextField label="Valor cuota inicial" id="filled-size-normal" size="small" name="cuota" variant="outlined" disabled={!isCliente} onChange={handlerDataCredito} />
+                                                <TextField
+                                                    id="outlined-select-currency"
+                                                    select
+                                                    label="Periodo cuotas"
+                                                    onChange={handlerDataCredito}
+                                                    variant="outlined"
+                                                    name="periodo"
+                                                    disabled={!isCliente}
+                                                    size="small"
+                                                >
+                                                    <MenuItem value={1}>
+                                                        Semanal
+                                                    </MenuItem>
+                                                    <MenuItem value={2}>
+                                                        Quincenal
+                                                    </MenuItem>
+                                                    <MenuItem value={3}>
+                                                        Mensual
+                                                    </MenuItem>
+                                                    <MenuItem value={4}>
+                                                        Trimestral
+                                                    </MenuItem>
 
-                                    : null
-                                }
+                                                </TextField>
+                                                <TextField label="Valor cuotas" id="filled-size-normal" size="small" name="valorcuotas" disabled value={Math.round(valorcuota)} variant="outlined" onChange={handlerDataCredito} />
+                                            </div>
+                                        </Grid>
+
+                                        : null
+                                    }
+                                </Grid>
+                            </Grid>
+                            <Grid xs={12}>
+                                <Grid container justifyContent="space-evenly">
+                                    <Grid item >
+                                        <Boton color="bgc3" label="Vender" functionBoton={ventaContado} styleBoton="box-boton" />
+                                    </Grid>
+                                    <Grid item >
+                                        <Boton color="bgc7" label="Registrar" functionBoton={registrarCliente} styleBoton="box-boton" disabled={isCliente} />
+                                    </Grid>
+                                    <Grid item >
+                                        <Boton color="bgc7" label="Cancelar Venta" functionBoton={closeModal} styleBoton="box-boton" />
+                                    </Grid>
+                                </Grid>
                             </Grid>
                         </Grid>
-                        <Grid xs={12}>
-                            <Grid container justifyContent="space-evenly">
-                                <Grid item >
-                                    <Boton color="bgc3" label="Vender" functionBoton={ventaContado} styleBoton="box-boton" />
-                                </Grid>
-                                <Grid item >
-                                    <Boton color="bgc7" label="Registrar" functionBoton={registrarCliente} styleBoton="box-boton" disabled={isCliente} />
-                                </Grid>
-                                <Grid item >
-                                    <Boton color="bgc7" label="Cancelar Venta" functionBoton={closeModal} styleBoton="box-boton" />
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                )}
+                    )}
 
 
-            </Dialog>
+                </Dialog>
 
-        </NewVentas>
+            </NewVentas>
+        </>
     )
 }
 

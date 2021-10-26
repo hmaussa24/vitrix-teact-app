@@ -256,6 +256,7 @@ export default function PersistentDrawerLeft({ children, funcionBusqueda, value,
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>{sesion.sesion.nombre}</MenuItem>
+            <MenuItem onClick={() => {h.push("/herramientas")}}>Herramientas de la tienda</MenuItem>
             <MenuItem onClick={() => {clearSesionHome()}}>Salir</MenuItem>
         </Menu>
     );

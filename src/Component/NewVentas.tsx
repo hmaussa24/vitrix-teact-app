@@ -22,7 +22,7 @@ import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { Menu, MenuItem } from "@material-ui/core";
+import { Menu, MenuItem, LinearProgress } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useEffect } from "react";
 import { clearSesion } from "../Redux/slices/Login.slice";
@@ -216,7 +216,7 @@ export default function PersistentDrawerLeft({ children, funcionBusqueda, value,
     const [open, setOpen] = useState(false);
     const sesion = useAppSelector((state) => state.login);
     const h = useHistory()
-    const dispacher =  useAppDispachs()
+    const dispacher = useAppDispachs()
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -260,11 +260,11 @@ export default function PersistentDrawerLeft({ children, funcionBusqueda, value,
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>{sesion.sesion.nombre}</MenuItem>
-            <MenuItem onClick={() => {  clearSesionHome() }}>Salir</MenuItem>
+            <MenuItem onClick={() => { clearSesionHome() }}>Salir</MenuItem>
         </Menu>
     );
 
-    
+
     const clearSesionHome = () => {
         dispacher(clearSesion())
         h.push("/")
@@ -360,11 +360,11 @@ export default function PersistentDrawerLeft({ children, funcionBusqueda, value,
                         {/* <IconButton aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={4} color="secondary">
                                 <MailIcon />
-                            </Badge>
-                        </IconButton> */}
+                                </Badge>
+                            </IconButton> */}
                         {/* <IconButton aria-label="show 17 new notifications" color="inherit">
                             <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon />
+                            <NotificationsIcon />
                             </Badge>
                         </IconButton> */}
                         <IconButton
@@ -391,6 +391,7 @@ export default function PersistentDrawerLeft({ children, funcionBusqueda, value,
                     </div>
                 </Toolbar>
             </AppBar>
+           
             {renderMobileMenu}
             {renderMenu}
             <Drawer
@@ -417,6 +418,7 @@ export default function PersistentDrawerLeft({ children, funcionBusqueda, value,
                 })}
             >
                 <div className={classes.drawerHeader} />
+                 {/* <LinearProgress color="secondary" /> */}
                 {children}
             </main>
         </div>

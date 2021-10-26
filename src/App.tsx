@@ -22,6 +22,7 @@ import PagosCuotas from './Tienda/PagosCuotas';
 import InfoCredito from './Tienda/InfoCredito';
 import ReporteVentas from './Tienda/ReporteDiarioVentas';
 import ReporteInventario from './Tienda/ReporteInventario';
+import developTools from './Tienda/developTool';
 // function App() {
   
   function App() {
@@ -48,6 +49,7 @@ import ReporteInventario from './Tienda/ReporteInventario';
             <Route path="/pagos/credito" component={InfoCredito} exact />
             <Route path="/reporteventas" component={ReporteVentas} exact />
             <Route path="/reporteinventario" component={ReporteInventario} exact />
+            <Route path="/herramientas" component={developTools} exact />
           </Switch>
         </BrowserRouter>
       </>

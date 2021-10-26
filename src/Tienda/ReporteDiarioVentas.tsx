@@ -1,6 +1,6 @@
 
 import 'date-fns';
-import { useAppSelector } from '../Redux/hooks/hooks';
+import { useAppSelector, useAppDispachs } from '../Redux/hooks/hooks';
 import NewTienda from '../Component/NewTienda'
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,6 +13,7 @@ import { useEffect, useCallback } from 'react';
 import { httpGet } from '../Services/Http';
 import DateFnsUtils from '@date-io/date-fns';
 import moment from 'moment';
+import { setSpiner } from '../Redux/slices/Spiner.slice'
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
@@ -43,18 +44,20 @@ const ReporteVentas = () => {
     const [meses, setMeses] = useState<string[]>([]);
     const [total, setTotal] = useState<number[]>([]);
     const [totalCredito, setTotalCredito] = useState<number[]>([]);
-
+    const dispacher = useAppDispachs();
     const consultarVentasDiarias = useCallback((fecha: Date | null) => {
         setOpenCalendar(false)
         setSelectedDate(fecha)
         //const date = `${fecha?.getFullYear()}-${fecha?.getMonth()}-${fecha?.getDay()}`
         //console.log(date, fecha, moment(fecha).format("YYYY-MM-DD"))
+        dispacher(setSpiner(true))
         httpGet<any[]>(`${urlBase}ventas/informediario/${tienda.id}/${moment(fecha).format("YYYY-MM-DD")}`, { headers: { Authorization: sesion.sesion.token } })
             .then(result => {
                 setVentas(result.data)
+                dispacher(setSpiner(false))
             })
             .catch(error => {
-
+                dispacher(setSpiner(false))
             })
     }, [sesion.sesion.token, tienda.id, urlBase])
 

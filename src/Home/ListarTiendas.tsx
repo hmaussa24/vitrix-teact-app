@@ -119,7 +119,7 @@ const ListarTiendas = () => {
                     {tiendas?.map((Element) => (
                         <Grid item>
 
-                            <Card style={{ width: 300 }}  >
+                            <Card style={{ width: 300 }}  onClick={() => redirectTienda(Element.nombre, Element.id)} >
                                 <CardActionArea>
                                     <CardMedia
                                         style={{ height: 140 }}
